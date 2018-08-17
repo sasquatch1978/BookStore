@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Book Store</string>
+    <string name="minimum_quantity">Please have a minimum quantity zero.</string>
+
+    <!-- Label for the editor menu option to save a book and leave the editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+
+    <!-- Label for the editor overflow menu option that deletes the current book [CHAR LIMIT=20] -->
+    <string name="action_delete">Delete</string>
+
+    <string name="save_error">Error saving book.</string>
+    <string name="save_successful">Book saved.</string>
+    <string name="update_error">Error updating book.</string>
+    <string name="update_successful">Book updated.</string>
+    <string name="delete_error">Error deleting book.</string>
+    <string name="delete_successful">Book deleted.</string>
+    <string name="editor_activity_title_new_book">Add a Book</string>
+    <string name="editor_activity_title_edit_book">Edit Book</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current book [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
+
+    <!-- Dialog message to ask the user to confirm deleting the current book [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this book?</string>
+
+    <!-- Dialog button text for the option to confirm deleting the current book [CHAR LIMIT=20] -->
+    <string name="delete">Delete</string>
+
+    <!-- Dialog button text for the option to cancel deletion of the current book [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
+    <string name="zero">0</string>
+    <string name="out_of_stock">Out of stock: </string>
+    <string name="in_stock">In stock: </string>
+    <string name="contact_supplier">This book is out of stock.\nPlease contact the supplier to reorder.</string>
+    <string name="quantity_not_updated">Quantity not updated.</string>
+    <string name="quantity_updated">Quantity updated.</string>
+    <string name="install_phone_app">Please install a phone app.</string>
+</resources>
