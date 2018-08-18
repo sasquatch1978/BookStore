@@ -1,19 +1,27 @@
 package com.example.android.bookstore;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.android.bookstore.data.BookContract.BookEntry;
 
@@ -52,7 +60,14 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 Uri currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
                 // Set the URI on the data field of the intent
                 editBook.setData(currentBookUri);
-                startActivity(editBook);
+                /* Make a parent to child activity transition.
+                   Reference: https://stackoverflow.com/a/43748907
+                   Date: 6/13/18
+                 */
+                Bundle options = ActivityOptionsCompat.makeScaleUpAnimation(
+                        view, 0, 0, view.getWidth(), view.getHeight()).toBundle();
+                ActivityCompat.startActivity(CatalogActivity.this, editBook, options);
+                // End referenced code.
             }
         });
 
@@ -65,6 +80,72 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 startActivity(addBook);
             }
         });
+    }
+
+    // Prompt the user to confirm that they want to delete all books in the database.
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the positive and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message and title.
+        builder.setMessage(R.string.delete_all_dialog_msg)
+                .setTitle(R.string.delete_all_dialog_msg_title);
+
+        // Handle the button clicks.
+        builder.setPositiveButton(R.string.delete_all_yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Yes" button, so delete all books.
+                deleteAllBooks();
+            }
+        });
+        builder.setNegativeButton(R.string.delete_all_no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "No" button, so dismiss the dialog.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    // Delete all books in the database.
+    private void deleteAllBooks() {
+        int rowsDeleted = getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
+
+        // Show a toast message depending on whether or not the delete was successful.
+        if (rowsDeleted == 0) {
+            // If no rows were deleted, then there was an error with the delete.
+            Toast.makeText(this, "Error deleting books.",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            // Otherwise, the delete was successful, display a toast.
+            Toast.makeText(this, "All books deleted.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_catalog.xml file.
+        getMenuInflater().inflate(R.menu.menu_catalog, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Determine which item is selected and take the appropriate action.
+        int id = item.getItemId();
+        // Respond to a click on the "Delete all entries" menu option
+        if (id == R.id.action_delete_all_entries) {
+            showDeleteConfirmationDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -82,6 +82,7 @@ public class BookCursorAdapter extends CursorAdapter {
         // Set the the attributes for the current book on the TextViews.
         tvTitle.setText(productName);
         tvAuthor.setText(author);
+        // Format the price corresponding to the user's locale.
         tvPrice.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(price)));
         tvQuantity.setText(quantity);
         if (quantity.equals(context.getString(R.string.zero))) {
@@ -90,10 +91,15 @@ public class BookCursorAdapter extends CursorAdapter {
 
             // Change the text color in the quantity hint TextView if the quantity is zero.
             tvQuantityHint.setTextColor(context.getResources().getColor(R.color.colorTextAttention));
-            
+
             // Set the quantity hint TextView text to "Out of stock:", if the quantity is zero.
             tvQuantityHint.setText(R.string.out_of_stock);
         } else {
+            // Make sure the quantity hint TextView reverts to it's normal state,
+            // if the quantity was previously zero.
+            tvQuantityHint.setTypeface(Typeface.create(tvQuantityHint.getTypeface(), Typeface.NORMAL));
+            tvQuantityHint.setTextColor(context.getResources().getColor(R.color.colorTextLight));
+
             // Set the quantity hint TextView text to "In stock:", if the quantity is more than zero.
             tvQuantityHint.setText(R.string.in_stock);
         }

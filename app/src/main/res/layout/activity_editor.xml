@@ -1,133 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/marginMedium"
+    android:fillViewport="true"
     tools:context=".EditorActivity">
 
-    <TextView
-        android:id="@+id/tv_book"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccentDark"
-        android:textStyle="bold"
-        android:text="Book"
-        app:layout_constraintBottom_toBottomOf="@+id/et_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_title" />
+        android:padding="@dimen/marginMedium">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccentDark"
-        android:textStyle="bold"
-        android:text="Quantity"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_decrease"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_decrease" />
+        <TextView
+            android:id="@+id/tv_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book"
+            android:textColor="@color/colorText"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/et_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_title" />
 
-    <TextView
-        android:id="@+id/tv_supplier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccentDark"
-        android:textStyle="bold"
-        android:text="Supplier"
-        app:layout_constraintBottom_toBottomOf="@+id/et_supplier"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/et_supplier" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity"
+            android:textColor="@color/colorText"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_decrease"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_decrease" />
 
-    <EditText
-        android:id="@+id/et_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:hint="Title"
-        android:inputType="textCapWords"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_supplier"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_supplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Supplier"
+            android:textColor="@color/colorText"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/et_supplier"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_supplier" />
 
-    <EditText
-        android:id="@+id/et_author"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Author"
-        android:inputType="textPersonName|textCapWords"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/et_title"
-        app:layout_constraintTop_toBottomOf="@+id/et_title" />
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:hint="Title"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="textCapWords"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_supplier"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Price"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/et_author"
-        app:layout_constraintTop_toBottomOf="@+id/et_author" />
+        <EditText
+            android:id="@+id/et_author"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Author"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="textPersonName|textCapWords"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/et_title"
+            app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
-    <Button
-        android:id="@+id/btn_decrease"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        app:layout_constraintStart_toStartOf="@+id/et_price"
-        app:layout_constraintTop_toBottomOf="@+id/et_price" />
+        <EditText
+            android:id="@+id/et_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Price"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/et_author"
+            app:layout_constraintTop_toBottomOf="@+id/et_author" />
 
-    <Button
-        android:id="@+id/btn_increase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_price" />
+        <Button
+            android:id="@+id/btn_decrease"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="@dimen/marginMedium"
+            android:text="-"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/et_price"
+            app:layout_constraintTop_toBottomOf="@+id/et_price" />
 
-    <TextView
-        android:id="@+id/tv_edit_quantity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/zero"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_decrease"
-        app:layout_constraintEnd_toStartOf="@+id/btn_increase"
-        app:layout_constraintStart_toEndOf="@+id/btn_decrease"
-        app:layout_constraintTop_toTopOf="@+id/btn_decrease" />
+        <Button
+            android:id="@+id/btn_increase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="@dimen/marginMedium"
+            android:text="+"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_price" />
 
-    <EditText
-        android:id="@+id/et_phone_number"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Phone Number"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/et_supplier"
-        app:layout_constraintTop_toBottomOf="@id/et_supplier" />
+        <TextView
+            android:id="@+id/tv_edit_quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/zero"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_decrease"
+            app:layout_constraintEnd_toStartOf="@+id/btn_increase"
+            app:layout_constraintStart_toEndOf="@+id/btn_decrease"
+            app:layout_constraintTop_toTopOf="@+id/btn_decrease" />
 
-    <EditText
-        android:id="@+id/et_supplier"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Supplier"
-        android:inputType="textCapWords"
-        app:layout_constraintBottom_toTopOf="@+id/et_phone_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btn_decrease"
-        app:layout_constraintTop_toBottomOf="@+id/btn_decrease" />
+        <EditText
+            android:id="@+id/et_phone_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/et_supplier"
+            app:layout_constraintTop_toBottomOf="@id/et_supplier" />
 
-    <Button
-        android:id="@+id/btn_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Order"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_phone_number" />
+        <EditText
+            android:id="@+id/et_supplier"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Supplier"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="textCapWords"
+            app:layout_constraintBottom_toTopOf="@+id/et_phone_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btn_decrease"
+            app:layout_constraintTop_toBottomOf="@+id/btn_decrease" />
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_phone"
+            android:padding="@dimen/marginMedium"
+            android:text="Order"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_phone_number" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

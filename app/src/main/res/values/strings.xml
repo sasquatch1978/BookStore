@@ -2,6 +2,9 @@
     <string name="app_name">Book Store</string>
     <string name="minimum_quantity">Please have a minimum quantity zero.</string>
 
+    <!-- Label for overflow menu option that deletes all book data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Books</string>
+
     <!-- Label for the editor menu option to save a book and leave the editor [CHAR LIMIT=20] -->
     <string name="action_save">Save</string>
 
@@ -35,10 +38,14 @@
     <!-- Dialog button text for the option to cancel deletion of the current book [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
     <string name="zero">0</string>
-    <string name="out_of_stock">Out of stock: </string>
-    <string name="in_stock">In stock: </string>
+    <string name="out_of_stock">Out of stock:</string>
+    <string name="in_stock">In stock:</string>
     <string name="contact_supplier">This book is out of stock.\nPlease contact the supplier to reorder.</string>
     <string name="quantity_not_updated">Quantity not updated.</string>
     <string name="quantity_updated">Quantity updated.</string>
     <string name="install_phone_app">Please install a phone app.</string>
+    <string name="delete_all_dialog_msg">You are about to delete your entire inventory, this action cannot be undone.\n\nDo you want to delete all books?</string>
+    <string name="delete_all_yes">Yes</string>
+    <string name="delete_all_no">No</string>
+    <string name="delete_all_dialog_msg_title">Warning:</string>
 </resources>
