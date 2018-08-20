@@ -20,9 +20,6 @@
             android:name=".EditorActivity"
             android:parentActivityName=".CatalogActivity"
             android:windowSoftInputMode="stateUnchanged" />
-        <activity
-            android:name=".BookDetailsActivity"
-            android:parentActivityName=".CatalogActivity" />
 
         <provider
             android:name=".data.BookProvider"
