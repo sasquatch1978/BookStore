@@ -2,4 +2,5 @@
 <resources>
     <dimen name="marginMedium">16dp</dimen>
     <dimen name="marginLarge">32dp</dimen>
+    <dimen name="textSize">16sp</dimen>
 </resources>

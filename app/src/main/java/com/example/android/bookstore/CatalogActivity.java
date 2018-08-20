@@ -14,12 +14,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,13 +28,18 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     private BookCursorAdapter adapter;
     private static final int BOOK_LOADER_ID = 1;
 
+    private ListView bookList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
 
+        // Have the app bar say "Inventory".
+        setTitle(getString(R.string.catalog_activity_title));
+
         // Identify the views.
-        ListView bookList = findViewById(R.id.book_list);
+        bookList = findViewById(R.id.book_list);
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
@@ -140,12 +143,28 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     public boolean onOptionsItemSelected(MenuItem item) {
         // Determine which item is selected and take the appropriate action.
         int id = item.getItemId();
-        // Respond to a click on the "Delete all entries" menu option
+
+        // Respond to a click on the "Delete All Books" menu option.
         if (id == R.id.action_delete_all_entries) {
             showDeleteConfirmationDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        // Get the number of books in the list.
+        int numberOfBooks = adapter.getCount();
+
+        // If the book list is empty, hide the "Delete All Books" menu option.
+        if (numberOfBooks == 0) {
+            MenuItem deleteAllEntries = menu.findItem(R.id.action_delete_all_entries);
+            deleteAllEntries.setVisible(false);
+        }
+        return true;
     }
 
     @Override
@@ -157,7 +176,8 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 BookEntry.COLUMN_BOOK_PRODUCT_NAME,
                 BookEntry.COLUMN_BOOK_AUTHOR,
                 BookEntry.COLUMN_BOOK_PRICE,
-                BookEntry.COLUMN_BOOK_QUANTITY
+                BookEntry.COLUMN_BOOK_QUANTITY,
+                BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER
         };
 
         // This loader will execute the ContentProvider's query on the background thread.
@@ -173,6 +193,9 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Swap the new cursor in.
         adapter.swapCursor(cursor);
+
+        // Invalidate the options menu, so the "Delete All Books" menu option can be hidden.
+        invalidateOptionsMenu();
     }
 
     @Override

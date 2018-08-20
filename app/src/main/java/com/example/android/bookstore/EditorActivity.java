@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,14 +25,14 @@ import android.widget.Toast;
 
 import com.example.android.bookstore.data.BookContract.BookEntry;
 
+import java.text.NumberFormat;
+
 public class EditorActivity extends AppCompatActivity implements View.OnClickListener,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private int quantity;
+    private TextView tvFillInFields;
     private TextView tvEditQuantity;
-    private Button btnDecrease;
-    private Button btnIncrease;
-    private Button btnOrder;
     private EditText etTitle;
     private EditText etAuthor;
     private EditText etPrice;
@@ -65,18 +64,21 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_editor);
 
         // Identify the views.
+        tvFillInFields = findViewById(R.id.tv_fill_in_fields);
         tvEditQuantity = findViewById(R.id.tv_edit_quantity);
-        btnDecrease = findViewById(R.id.btn_decrease);
-        btnDecrease.setOnClickListener(this);
-        btnIncrease = findViewById(R.id.btn_increase);
-        btnIncrease.setOnClickListener(this);
-        btnOrder = findViewById(R.id.btn_order);
-        btnOrder.setOnClickListener(this);
         etTitle = findViewById(R.id.et_title);
         etAuthor = findViewById(R.id.et_author);
         etPrice = findViewById(R.id.et_price);
         etSupplier = findViewById(R.id.et_supplier);
         etPhoneNumber = findViewById(R.id.et_phone_number);
+        Button btnDecrease = findViewById(R.id.btn_decrease);
+        Button btnIncrease = findViewById(R.id.btn_increase);
+        Button btnOrder = findViewById(R.id.btn_order);
+
+        // Set an OnClickListener for each button.
+        btnDecrease.setOnClickListener(this);
+        btnIncrease.setOnClickListener(this);
+        btnOrder.setOnClickListener(this);
 
         // Set an OnTouchListener for each view.
         btnDecrease.setOnTouchListener(touchListener);
@@ -109,6 +111,9 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
 
             // Prepare the loader.
             getLoaderManager().initLoader(CURRENT_BOOK_LOADER_ID, null, this);
+
+            // Hide the fill in fields TextView since they are already filled in.
+            tvFillInFields.setVisibility(View.GONE);
         }
 
         /* Format the phone number as the user types it.
@@ -237,8 +242,8 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         super.onPrepareOptionsMenu(menu);
         // If this is a new book, hide the "Delete" menu item.
         if (currentBookUri == null) {
-            MenuItem menuItem = menu.findItem(R.id.action_delete);
-            menuItem.setVisible(false);
+            MenuItem delete = menu.findItem(R.id.action_delete);
+            delete.setVisible(false);
         }
         return true;
     }
@@ -408,7 +413,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Delete" button, so delete the book.
-                deletePet();
+                deleteBook();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -427,7 +432,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     // Perform the deletion of the book in the database.
-    private void deletePet() {
+    private void deleteBook() {
         // Only perform the delete if this is an existing book.
         if (currentBookUri != null) {
             // Delete an existing book.
@@ -496,8 +501,14 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
             String supplier = cursor.getString(supplierColumnIndex);
             supplierPhoneNumber = cursor.getString(supplierPhoneNumberColumnIndex);
 
+            // Format the price to two decimal places, so that it displays as "7.50" not "7.5"
+            NumberFormat nf = NumberFormat.getInstance();
+            nf.setMaximumFractionDigits(2);
+            nf.setMinimumFractionDigits(2);
+            String formatPrice = nf.format(price);
+
             // Convert the price and quantity back to Strings to be displayed on the views.
-            String bookPrice = String.valueOf(price);
+            String bookPrice = String.valueOf(formatPrice);
             String bookQuantity = String.valueOf(quantity);
 
             // Update the views on the screen with the values from the database.

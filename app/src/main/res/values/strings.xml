@@ -44,8 +44,9 @@
     <string name="quantity_not_updated">Quantity not updated.</string>
     <string name="quantity_updated">Quantity updated.</string>
     <string name="install_phone_app">Please install a phone app.</string>
-    <string name="delete_all_dialog_msg">You are about to delete your entire inventory, this action cannot be undone.\n\nDo you want to delete all books?</string>
+    <string name="delete_all_dialog_msg_title">Delete all books?</string>
+    <string name="delete_all_dialog_msg">You are about to delete your entire inventory, this action cannot be undone.</string>
     <string name="delete_all_yes">Yes</string>
     <string name="delete_all_no">No</string>
-    <string name="delete_all_dialog_msg_title">Warning:</string>
+    <string name="catalog_activity_title">Inventory</string>
 </resources>
