@@ -49,4 +49,12 @@
     <string name="delete_all_yes">Yes</string>
     <string name="delete_all_no">No</string>
     <string name="catalog_activity_title">Inventory</string>
+    <string name="enter_title">Please enter a title.</string>
+    <string name="enter_author">Please enter an author.</string>
+    <string name="enter_price">Please enter a price.</string>
+    <string name="enter_quantity">Please enter a quantity.</string>
+    <string name="enter_supplier">Please enter a supplier.</string>
+    <string name="enter_suppliers_phone_number">Please enter the supplier\'s phone number.</string>
+    <string name="delete_all_error">Error deleting books.</string>
+    <string name="delete_all_successful">All books deleted.</string>
 </resources>

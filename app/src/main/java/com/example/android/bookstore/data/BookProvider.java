@@ -23,10 +23,10 @@ public class BookProvider extends ContentProvider {
     // Tag for the log messages.
     private static final String LOG_TAG = BookProvider.class.getSimpleName();
 
-    // URI matcher code for the content URI for the books table
+    // URI matcher code for the content URI for the books table.
     private static final int BOOK = 100;
 
-    // URI matcher code for the content URI for a single book in the books table
+    // URI matcher code for the content URI for a single book in the books table.
     private static final int BOOK_ID = 101;
 
     // UriMatcher object to match a content URI to a corresponding code.
@@ -34,10 +34,10 @@ public class BookProvider extends ContentProvider {
 
     // Static initializer. This is run the first time anything is called from this class.
     static {
-        // Sets the integer value for multiple rows in the pets table.
+        // Sets the integer value for multiple rows in the books table.
         uriMatcher.addURI(BookContract.CONTENT_AUTHORITY, BookContract.PATH_BOOKSTORE, BOOK);
 
-        // Sets the integer value to a single row in the pets table.
+        // Sets the integer value to a single row in the books table.
         uriMatcher.addURI(BookContract.CONTENT_AUTHORITY, BookContract.PATH_BOOKSTORE
                 + "/#", BOOK_ID);
     }
@@ -57,10 +57,10 @@ public class BookProvider extends ContentProvider {
         // Get readable database
         SQLiteDatabase database = dbHelper.getReadableDatabase();
 
-        // This cursor will hold the result of the query
+        // This cursor will hold the result of the query.
         Cursor cursor;
 
-        // Figure out if the URI matcher can match the URI to a specific code
+        // Figure out if the URI matcher can match the URI to a specific code.
         int match = uriMatcher.match(uri);
         switch (match) {
             case BOOK:
@@ -172,8 +172,8 @@ public class BookProvider extends ContentProvider {
         // Notify all listeners that the data has changed for the book content URI.
         Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
 
-        // Once we know the ID of the new row in the table,
-        // return the new URI with the ID appended to the end of it
+        // Once the ID of the new row in the table is known,
+        // return the new URI with the ID appended to the end of it.
         return ContentUris.withAppendedId(uri, id);
     }
 
@@ -184,17 +184,17 @@ public class BookProvider extends ContentProvider {
         // Get writable database
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        // Track the number of rows that were deleted
+        // Track the number of rows that were deleted.
         int rowsDeleted;
 
         final int match = uriMatcher.match(uri);
         switch (match) {
             case BOOK:
-                // Delete all rows that match the selection and selection args
+                // Delete all rows that match the selection and selection args.
                 rowsDeleted = database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case BOOK_ID:
-                // Delete a single row given by the ID in the URI
+                // Delete a single row given by the ID in the URI.
                 selection = BookEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
@@ -204,12 +204,12 @@ public class BookProvider extends ContentProvider {
         }
 
         // If 1 or more rows were deleted, then notify all listeners that the data at the
-        // given URI has changed
+        // given URI has changed.
         if (rowsDeleted != 0) {
             Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
 
-        // Return the number of rows deleted
+        // Return the number of rows deleted.
         return rowsDeleted;
     }
 
@@ -284,7 +284,7 @@ public class BookProvider extends ContentProvider {
         }
 
         // If the {@link BookEntry#COLUMN_BOOK_SUPPLIER_PHONE_NUMBER} key is present,
-        // check that the product_name value is not null.
+        // check that the supplier_phone_number value is not null.
         if (values.containsKey(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER)) {
             String supplierPhoneNumber = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE_NUMBER);
             if (supplierPhoneNumber == null) {
@@ -292,24 +292,24 @@ public class BookProvider extends ContentProvider {
             }
         }
 
-        // If there are no values to update, then don't try to update the database
+        // If there are no values to update, then don't try to update the database.
         if (values.size() == 0) {
             return 0;
         }
 
-        // Otherwise, get writable database to update the data
+        // Otherwise, get writable database to update the data.
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        // Perform the update on the database and get the number of rows affected
+        // Perform the update on the database and get the number of rows affected.
         int rowsUpdated = database.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
 
         // If 1 or more rows were updated, then notify all listeners that the data at the
-        // given URI has changed
+        // given URI has changed.
         if (rowsUpdated != 0) {
             Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
 
-        // Return the number of rows updated
+        // Return the number of rows updated.
         return rowsUpdated;
     }
 }

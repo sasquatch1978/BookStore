@@ -25,25 +25,26 @@ import com.example.android.bookstore.data.BookContract.BookEntry;
 
 public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    // The cursor adapter for the ListView.
     private BookCursorAdapter adapter;
-    private static final int BOOK_LOADER_ID = 1;
 
-    private ListView bookList;
+    // Identifier for the book loader.
+    private static final int BOOK_LOADER_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
 
-        // Have the app bar say "Inventory".
+        // Set the app bar to display "Inventory".
         setTitle(getString(R.string.catalog_activity_title));
 
         // Identify the views.
-        bookList = findViewById(R.id.book_list);
+        View emptyView = findViewById(R.id.empty_view);
+        ListView bookList = findViewById(R.id.book_list);
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
 
-        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
-        View emptyView = findViewById(R.id.empty_view);
+        // Set the empty view on the ListView, so that it only shows when the list has 0 items.
         bookList.setEmptyView(emptyView);
 
         // Set the adapter.
@@ -74,7 +75,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             }
         });
 
-        // Start the EditorActivity.
+        // Set a listener for the FAB that opens the editor, so a new book can be added.
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +84,41 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 startActivity(addBook);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_catalog.xml file.
+        getMenuInflater().inflate(R.menu.menu_catalog, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        // Get the number of books in the list.
+        int numberOfBooks = adapter.getCount();
+
+        // If the book list is empty, hide the "Delete All Books" menu option.
+        if (numberOfBooks == 0) {
+            MenuItem deleteAllEntries = menu.findItem(R.id.action_delete_all_entries);
+            deleteAllEntries.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Determine which item is selected and take the appropriate action.
+        int id = item.getItemId();
+
+        // Respond to a click on the "Delete All Books" menu option.
+        if (id == R.id.action_delete_all_entries) {
+            showDeleteConfirmationDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // Prompt the user to confirm that they want to delete all books in the database.
@@ -118,53 +154,17 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
     // Delete all books in the database.
     private void deleteAllBooks() {
-        int rowsDeleted = getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
+        int rowsDeleted = getContentResolver().delete(BookEntry.CONTENT_URI, null,
+                null);
 
         // Show a toast message depending on whether or not the delete was successful.
         if (rowsDeleted == 0) {
             // If no rows were deleted, then there was an error with the delete.
-            Toast.makeText(this, "Error deleting books.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.delete_all_error, Toast.LENGTH_SHORT).show();
         } else {
             // Otherwise, the delete was successful, display a toast.
-            Toast.makeText(this, "All books deleted.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.delete_all_successful, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_catalog.xml file.
-        getMenuInflater().inflate(R.menu.menu_catalog, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Determine which item is selected and take the appropriate action.
-        int id = item.getItemId();
-
-        // Respond to a click on the "Delete All Books" menu option.
-        if (id == R.id.action_delete_all_entries) {
-            showDeleteConfirmationDialog();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        // Get the number of books in the list.
-        int numberOfBooks = adapter.getCount();
-
-        // If the book list is empty, hide the "Delete All Books" menu option.
-        if (numberOfBooks == 0) {
-            MenuItem deleteAllEntries = menu.findItem(R.id.action_delete_all_entries);
-            deleteAllEntries.setVisible(false);
-        }
-        return true;
     }
 
     @Override

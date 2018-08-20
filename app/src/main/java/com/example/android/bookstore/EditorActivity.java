@@ -30,7 +30,6 @@ import java.text.NumberFormat;
 public class EditorActivity extends AppCompatActivity implements View.OnClickListener,
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    private int quantity;
     private TextView tvFillInFields;
     private TextView tvEditQuantity;
     private EditText etTitle;
@@ -38,12 +37,27 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
     private EditText etPrice;
     private EditText etSupplier;
     private EditText etPhoneNumber;
+    private Button btnDecrease;
+    private Button btnIncrease;
+    private Button btnOrder;
+
+
+    // Value for the number of books.
+    private int quantity;
+
+    // String for the supplier's phone number.
     private String supplierPhoneNumber;
 
     // Content URI for the existing book (null if it's a new book).
     private Uri currentBookUri;
 
+    // Identifier for the book loader.
     private static final int CURRENT_BOOK_LOADER_ID = 1;
+
+    // Holds the quantity for screen rotation.
+    private static String BOOK_QUANTITY = "book_quantity";
+
+    // Keeps track of whether the book has changed or not.
     private boolean bookHasChanged = false;
 
     // OnTouchListener that listens for any user touches on a View, implying that
@@ -56,38 +70,16 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         }
     };
 
-    private static String BOOK_QUANTITY = "book_quantity";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
         // Identify the views.
-        tvFillInFields = findViewById(R.id.tv_fill_in_fields);
-        tvEditQuantity = findViewById(R.id.tv_edit_quantity);
-        etTitle = findViewById(R.id.et_title);
-        etAuthor = findViewById(R.id.et_author);
-        etPrice = findViewById(R.id.et_price);
-        etSupplier = findViewById(R.id.et_supplier);
-        etPhoneNumber = findViewById(R.id.et_phone_number);
-        Button btnDecrease = findViewById(R.id.btn_decrease);
-        Button btnIncrease = findViewById(R.id.btn_increase);
-        Button btnOrder = findViewById(R.id.btn_order);
+        identifyViews();
 
-        // Set an OnClickListener for each button.
-        btnDecrease.setOnClickListener(this);
-        btnIncrease.setOnClickListener(this);
-        btnOrder.setOnClickListener(this);
-
-        // Set an OnTouchListener for each view.
-        btnDecrease.setOnTouchListener(touchListener);
-        btnIncrease.setOnTouchListener(touchListener);
-        etTitle.setOnTouchListener(touchListener);
-        etAuthor.setOnTouchListener(touchListener);
-        etPrice.setOnTouchListener(touchListener);
-        etSupplier.setOnTouchListener(touchListener);
-        etPhoneNumber.setOnTouchListener(touchListener);
+        // Set the appropriate listeners for the views.
+        setViewListeners();
 
         // Examine the intent that was used to launch this activity, in order to figure out
         // if a new book is being created or an existing one is being edited.
@@ -115,13 +107,6 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
             // Hide the fill in fields TextView since they are already filled in.
             tvFillInFields.setVisibility(View.GONE);
         }
-
-        /* Format the phone number as the user types it.
-           Reference: https://stackoverflow.com/a/15647444
-           Date: 8/1/18
-         */
-        etPhoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-        // End referenced code.
     }
 
     // Save values for screen rotation.
@@ -157,7 +142,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // User clicked "Discard" button, close the current activity.
+                        // User clicked "Discard" button, exit the current activity.
                         finish();
                     }
                 };
@@ -171,7 +156,11 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         // Create an AlertDialog.Builder and set the message, and click listeners
         // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message.
         builder.setMessage(R.string.unsaved_changes_dialog_msg);
+
+        // Handle the button clicks.
         builder.setPositiveButton(R.string.discard, discardButtonClickListener);
         builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -311,19 +300,19 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
 
         // Make sure the book title is entered.
         if (TextUtils.isEmpty(productName)) {
-            Toast.makeText(this, "Please enter a title.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.enter_title, Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Make sure the author is entered.
         if (TextUtils.isEmpty(author)) {
-            Toast.makeText(this, "Please enter an author.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.enter_author, Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Make sure the price is entered.
         if (TextUtils.isEmpty(price)) {
-            Toast.makeText(this, "Please enter a price.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.enter_price, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -331,19 +320,20 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         // Can be zero when editing book, in case the book is out of stock and user wants to change
         // other information, but hasn't received any new inventory yet.
         if (currentBookUri == null && quantity.equals(getString(R.string.zero))) {
-            Toast.makeText(this, "Please enter a quantity.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.enter_quantity, Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Make sure the supplier is entered.
         if (TextUtils.isEmpty(supplier)) {
-            Toast.makeText(this, "Please enter a supplier.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.enter_supplier, Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Make sure the supplier's phone number is entered.
         if (TextUtils.isEmpty(supplierPhoneNumber)) {
-            Toast.makeText(this, "Please enter the supplier's phone number.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.enter_suppliers_phone_number,
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -448,7 +438,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this, R.string.delete_successful, Toast.LENGTH_SHORT).show();
             }
         }
-        // Close the activity
+        // Exit the activity.
         finish();
     }
 
@@ -507,15 +497,11 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
             nf.setMinimumFractionDigits(2);
             String formatPrice = nf.format(price);
 
-            // Convert the price and quantity back to Strings to be displayed on the views.
-            String bookPrice = String.valueOf(formatPrice);
-            String bookQuantity = String.valueOf(quantity);
-
             // Update the views on the screen with the values from the database.
             etTitle.setText(productName);
             etAuthor.setText(author);
-            etPrice.setText(bookPrice);
-            tvEditQuantity.setText(bookQuantity);
+            etPrice.setText(formatPrice);
+            tvEditQuantity.setText(String.valueOf(quantity));
             etSupplier.setText(supplier);
             etPhoneNumber.setText(supplierPhoneNumber);
         }
@@ -530,5 +516,44 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         tvEditQuantity.setText("");
         etSupplier.setText("");
         etPhoneNumber.setText("");
+    }
+
+    // Identify the views.
+    private void identifyViews() {
+        // Identify the views.
+        tvFillInFields = findViewById(R.id.tv_fill_in_fields);
+        tvEditQuantity = findViewById(R.id.tv_edit_quantity);
+        etTitle = findViewById(R.id.et_title);
+        etAuthor = findViewById(R.id.et_author);
+        etPrice = findViewById(R.id.et_price);
+        etSupplier = findViewById(R.id.et_supplier);
+        etPhoneNumber = findViewById(R.id.et_phone_number);
+        btnDecrease = findViewById(R.id.btn_decrease);
+        btnIncrease = findViewById(R.id.btn_increase);
+        btnOrder = findViewById(R.id.btn_order);
+    }
+
+    // Set the appropriate listeners for the views.
+    private void setViewListeners() {
+        // Set an OnClickListener for each button.
+        btnDecrease.setOnClickListener(this);
+        btnIncrease.setOnClickListener(this);
+        btnOrder.setOnClickListener(this);
+
+        // Set an OnTouchListener for each view.
+        btnDecrease.setOnTouchListener(touchListener);
+        btnIncrease.setOnTouchListener(touchListener);
+        etTitle.setOnTouchListener(touchListener);
+        etAuthor.setOnTouchListener(touchListener);
+        etPrice.setOnTouchListener(touchListener);
+        etSupplier.setOnTouchListener(touchListener);
+        etPhoneNumber.setOnTouchListener(touchListener);
+
+        /* Format the phone number as the user types it.
+           Reference: https://stackoverflow.com/a/15647444
+           Date: 8/1/18
+         */
+        etPhoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+        // End referenced code.
     }
 }

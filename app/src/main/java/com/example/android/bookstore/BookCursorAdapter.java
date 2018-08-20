@@ -80,11 +80,16 @@ public class BookCursorAdapter extends CursorAdapter {
         String quantity = cursor.getString(quantityColumnIndex);
 
         // Set the the attributes for the current book on the TextViews.
+        // Display the book title.
         tvTitle.setText(productName);
+
+        // Display the author.
         tvAuthor.setText(author);
-        // Format the price corresponding to the user's locale.
+
+        // Display the formatted the price corresponding to the user's locale.
         tvPrice.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(price)));
-        tvQuantity.setText(quantity);
+
+        // Display "In stock" or "Out of stock" for the quantity hint.
         if (quantity.equals(context.getString(R.string.zero))) {
             // Make the text bold in the quantity hint TextView if the quantity is zero.
             tvQuantityHint.setTypeface(Typeface.create(tvQuantityHint.getTypeface(), Typeface.BOLD));
@@ -103,6 +108,9 @@ public class BookCursorAdapter extends CursorAdapter {
             // Set the quantity hint TextView text to "In stock:", if the quantity is more than zero.
             tvQuantityHint.setText(R.string.in_stock);
         }
+
+        // Display the quantity.
+        tvQuantity.setText(quantity);
 
         // Set a listener for the Sale Button.
         btnSale.setOnClickListener(new View.OnClickListener() {
