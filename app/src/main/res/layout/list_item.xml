@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/marginMedium">
+    android:padding="@dimen/marginLarge">
 
     <TextView
         android:id="@+id/tv_title"
@@ -19,36 +19,21 @@
 
     <TextView
         android:id="@+id/tv_author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="@color/colorTextLight"
+        style="@style/ListTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
         tools:text="Author Name" />
 
     <TextView
         android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="@color/colorTextLight"
+        style="@style/ListTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_author"
         tools:text="$9.99" />
 
     <TextView
         android:id="@+id/tv_quantity_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="@color/colorTextLight"
+        style="@style/ListTextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_price"
@@ -58,8 +43,7 @@
         android:id="@+id/tv_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="sans-serif"
+        android:layout_marginStart="@dimen/marginMedium"
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="@color/colorTextLight"
         app:layout_constraintBottom_toBottomOf="@+id/tv_quantity_hint"
@@ -72,8 +56,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
         android:focusable="false"
-        android:padding="@dimen/marginMedium"
-        android:text="Sale"
+        android:padding="@dimen/marginLarge"
+        android:text="@string/btn_sale_text"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

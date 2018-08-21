@@ -8,4 +8,35 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="EditorCategory">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="EditorEditText">
+        <item name="android:layout_width">@dimen/zero</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:imeOptions">flagNoExtractUi</item>
+    </style>
+
+    <style name="EditorQuantityButton">
+        <item name="android:layout_width">@dimen/quantityButtonWidth</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:padding">@dimen/marginLarge</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/textSize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ListTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/marginSmall</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+    </style>
+
 </resources>

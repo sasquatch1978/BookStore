@@ -57,4 +57,18 @@
     <string name="enter_suppliers_phone_number">Please enter the supplier\'s phone number.</string>
     <string name="delete_all_error">Error deleting books.</string>
     <string name="delete_all_successful">All books deleted.</string>
+    <string name="inventory_is_empty">Your inventory is currently empty, click the +\nto start adding items.</string>
+    <string name="editor_fill_in_fields">Please fill in all fields.</string>
+    <string name="editor_category_book">Book</string>
+    <string name="editor_category_quantity">Quantity</string>
+    <string name="editor_category_supplier">Supplier</string>
+    <string name="et_title_hint">Title</string>
+    <string name="et_author_hint">Author</string>
+    <string name="et_price_hint">Price</string>
+    <string name="btn_decrease_text">-</string>
+    <string name="btn_increase_text">+</string>
+    <string name="et_phone_number_hint">Phone Number</string>
+    <string name="et_supplier_hint">Supplier</string>
+    <string name="btn_order_text">Order</string>
+    <string name="btn_sale_text">Sale</string>
 </resources>

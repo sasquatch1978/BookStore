@@ -25,13 +25,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text='Your inventory is currently empty, click the "+"\nto start adding items.'
+            android:layout_marginEnd="@dimen/marginLarge"
+            android:layout_marginStart="@dimen/marginLarge"
+            android:layout_marginTop="@dimen/marginMedium"
+            android:text="@string/inventory_is_empty"
             android:textAlignment="center"
             android:textColor="@color/colorText"
             android:textSize="@dimen/textSize"
@@ -55,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="@dimen/marginMedium"
+        android:layout_marginBottom="@dimen/marginLarge"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

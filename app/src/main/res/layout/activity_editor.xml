@@ -10,14 +10,14 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/marginMedium">
+        android:padding="@dimen/marginLarge">
 
         <TextView
             android:id="@+id/tv_fill_in_fields"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please fill in all fields."
-            android:paddingBottom="@dimen/marginMedium"
+            android:paddingBottom="@dimen/marginLarge"
+            android:text="@string/editor_fill_in_fields"
             android:textColor="@color/colorText"
             android:textSize="@dimen/textSize"
             android:textStyle="italic"
@@ -26,45 +26,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_book"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Book"
-            android:textColor="@color/colorText"
-            android:textStyle="bold"
+            style="@style/EditorCategory"
+            android:text="@string/editor_category_book"
             app:layout_constraintBottom_toBottomOf="@+id/et_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/et_title" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quantity"
-            android:textColor="@color/colorText"
-            android:textStyle="bold"
+            style="@style/EditorCategory"
+            android:text="@string/editor_category_quantity"
             app:layout_constraintBottom_toBottomOf="@+id/btn_decrease"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_decrease" />
 
         <TextView
             android:id="@+id/tv_supplier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Supplier"
-            android:textColor="@color/colorText"
-            android:textStyle="bold"
+            style="@style/EditorCategory"
+            android:text="@string/editor_category_supplier"
             app:layout_constraintBottom_toBottomOf="@+id/et_supplier"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/et_supplier" />
 
         <EditText
             android:id="@+id/et_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:hint="Title"
-            android:imeOptions="flagNoExtractUi"
+            style="@style/EditorEditText"
+            android:layout_marginStart="@dimen/marginExtraLarge"
+            android:hint="@string/et_title_hint"
             android:inputType="textCapWords"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_supplier"
@@ -72,10 +59,8 @@
 
         <EditText
             android:id="@+id/et_author"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Author"
-            android:imeOptions="flagNoExtractUi"
+            style="@style/EditorEditText"
+            android:hint="@string/et_author_hint"
             android:inputType="textPersonName|textCapWords"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/et_title"
@@ -83,10 +68,8 @@
 
         <EditText
             android:id="@+id/et_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Price"
-            android:imeOptions="flagNoExtractUi"
+            style="@style/EditorEditText"
+            android:hint="@string/et_price_hint"
             android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/et_author"
@@ -94,26 +77,16 @@
 
         <Button
             android:id="@+id/btn_decrease"
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="@dimen/marginMedium"
-            android:text="-"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
+            style="@style/EditorQuantityButton"
+            android:text="@string/btn_decrease_text"
             app:layout_constraintEnd_toStartOf="@+id/tv_edit_quantity"
             app:layout_constraintStart_toStartOf="@+id/et_price"
             app:layout_constraintTop_toBottomOf="@+id/et_price" />
 
         <Button
             android:id="@+id/btn_increase"
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="@dimen/marginMedium"
-            android:text="+"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
+            style="@style/EditorQuantityButton"
+            android:text="@string/btn_increase_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_edit_quantity"
             app:layout_constraintTop_toBottomOf="@+id/et_price" />
@@ -132,37 +105,33 @@
             app:layout_constraintTop_toTopOf="@+id/btn_decrease" />
 
         <EditText
-            android:id="@+id/et_phone_number"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Phone Number"
-            android:imeOptions="flagNoExtractUi"
-            android:inputType="phone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/et_supplier"
-            app:layout_constraintTop_toBottomOf="@id/et_supplier" />
-
-        <EditText
             android:id="@+id/et_supplier"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Supplier"
-            android:imeOptions="flagNoExtractUi"
+            style="@style/EditorEditText"
+            android:hint="@string/et_supplier_hint"
             android:inputType="textCapWords"
             app:layout_constraintBottom_toTopOf="@+id/et_phone_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/et_price"
             app:layout_constraintTop_toBottomOf="@+id/btn_decrease" />
 
+        <EditText
+            android:id="@+id/et_phone_number"
+            style="@style/EditorEditText"
+            android:hint="@string/et_phone_number_hint"
+            android:inputType="phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/et_supplier"
+            app:layout_constraintTop_toBottomOf="@id/et_supplier" />
+
         <Button
             android:id="@+id/btn_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:drawablePadding="8dp"
+            android:drawablePadding="@dimen/marginMedium"
             android:drawableStart="@drawable/ic_phone"
-            android:padding="@dimen/marginMedium"
-            android:text="Order"
+            android:padding="@dimen/marginLarge"
+            android:text="@string/btn_order_text"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
