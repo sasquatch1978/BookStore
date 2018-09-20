@@ -31,7 +31,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private TextView tvFillInFields;
-    private TextView tvEditQuantity;
+    private EditText etEditQuantity;
     private EditText etTitle;
     private EditText etAuthor;
     private EditText etPrice;
@@ -125,7 +125,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         quantity = savedInstanceState.getInt(BOOK_QUANTITY);
 
         // Display the values.
-        tvEditQuantity.setText(String.valueOf(quantity));
+        etEditQuantity.setText(String.valueOf(quantity));
     }
 
     @Override
@@ -179,6 +179,20 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+        // Get the text from the quantity EditText.
+        String enteredQuantity = etEditQuantity.getText().toString().trim();
+
+        // Check to see if quantity has been entered and set it as the quantity if it has.
+        if (!enteredQuantity.equals("")) {
+            quantity = Integer.parseInt(enteredQuantity);
+        }
+
+        // Set the quantity to zero if quantity has been entered and then removed,
+        // so that the buttons work properly.
+        if (enteredQuantity.equals("")) {
+            quantity = 0;
+        }
+
         // Perform action on click.
         switch (view.getId()) {
             // Action to perform when the decrease button is clicked.
@@ -192,14 +206,14 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
 
                 // Decrease the quantity and set the value in the quantity TextView.
                 quantity--;
-                tvEditQuantity.setText(String.valueOf(quantity));
+                etEditQuantity.setText(String.valueOf(quantity));
                 break;
 
             // Action to perform when the increase button is clicked.
             case R.id.btn_increase:
                 // Increase the quantity and set the value in the quantity TextView.
                 quantity++;
-                tvEditQuantity.setText(String.valueOf(quantity));
+                etEditQuantity.setText(String.valueOf(quantity));
                 break;
 
             // Action to perform when the order button is clicked.
@@ -284,7 +298,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         String productName = etTitle.getText().toString().trim();
         String author = etAuthor.getText().toString().trim();
         String price = etPrice.getText().toString().trim();
-        String quantity = tvEditQuantity.getText().toString().trim();
+        String quantity = etEditQuantity.getText().toString().trim();
         String supplier = etSupplier.getText().toString().trim();
         String supplierPhoneNumber = etPhoneNumber.getText().toString().trim();
 
@@ -319,7 +333,8 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         // Make sure the quantity is entered if it is a new book.
         // Can be zero when editing book, in case the book is out of stock and user wants to change
         // other information, but hasn't received any new inventory yet.
-        if (currentBookUri == null && quantity.equals(getString(R.string.zero))) {
+        if (currentBookUri == null && (quantity.equals(getString(R.string.zero)) ||
+                quantity.equals(""))) {
             Toast.makeText(this, R.string.enter_quantity, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -340,8 +355,11 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         // Convert the price to a double.
         double bookPrice = Double.parseDouble(price);
 
-        // Convert the quantity to an int.
-        int bookQuantity = Integer.parseInt(quantity);
+        // Convert the quantity to an int, if there is a quantity entered, if not set it to zero.
+        int bookQuantity = 0;
+        if (!quantity.equals("")) {
+            bookQuantity = Integer.parseInt(quantity);
+        }
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
@@ -491,17 +509,21 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
             String supplier = cursor.getString(supplierColumnIndex);
             supplierPhoneNumber = cursor.getString(supplierPhoneNumberColumnIndex);
 
-            // Format the price to two decimal places, so that it displays as "7.50" not "7.5"
+            // Format the price to two decimal places so that it displays as "7.50" not "7.5"
             NumberFormat nf = NumberFormat.getInstance();
             nf.setMaximumFractionDigits(2);
             nf.setMinimumFractionDigits(2);
             String formatPrice = nf.format(price);
 
+            // Remove commas from large numbers so that it displays as "258963.99" not "258,963.99",
+            // to keep the app from crashing when the save button is clicked.
+            String newFormatPrice = formatPrice.replace(",", "");
+
             // Update the views on the screen with the values from the database.
             etTitle.setText(productName);
             etAuthor.setText(author);
-            etPrice.setText(formatPrice);
-            tvEditQuantity.setText(String.valueOf(quantity));
+            etPrice.setText(newFormatPrice);
+            etEditQuantity.setText(String.valueOf(quantity));
             etSupplier.setText(supplier);
             etPhoneNumber.setText(supplierPhoneNumber);
         }
@@ -513,7 +535,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         etTitle.setText("");
         etAuthor.setText("");
         etPrice.setText("");
-        tvEditQuantity.setText("");
+        etEditQuantity.setText("");
         etSupplier.setText("");
         etPhoneNumber.setText("");
     }
@@ -522,7 +544,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
     private void identifyViews() {
         // Identify the views.
         tvFillInFields = findViewById(R.id.tv_fill_in_fields);
-        tvEditQuantity = findViewById(R.id.tv_edit_quantity);
+        etEditQuantity = findViewById(R.id.et_edit_quantity);
         etTitle = findViewById(R.id.et_title);
         etAuthor = findViewById(R.id.et_author);
         etPrice = findViewById(R.id.et_price);
@@ -546,6 +568,7 @@ public class EditorActivity extends AppCompatActivity implements View.OnClickLis
         etTitle.setOnTouchListener(touchListener);
         etAuthor.setOnTouchListener(touchListener);
         etPrice.setOnTouchListener(touchListener);
+        etEditQuantity.setOnTouchListener(touchListener);
         etSupplier.setOnTouchListener(touchListener);
         etPhoneNumber.setOnTouchListener(touchListener);
 

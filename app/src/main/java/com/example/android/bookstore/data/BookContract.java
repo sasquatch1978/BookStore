@@ -41,7 +41,6 @@ public final class BookContract {
         public static final String TABLE_NAME = "books";
 
         // Column names for the books table.
-        public static final String _ID = BaseColumns._ID;
         public static final String COLUMN_BOOK_PRODUCT_NAME = "product_name";
         public static final String COLUMN_BOOK_AUTHOR = "author";
         public static final String COLUMN_BOOK_PRICE = "price";

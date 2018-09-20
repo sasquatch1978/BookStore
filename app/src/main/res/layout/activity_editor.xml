@@ -33,13 +33,6 @@
             app:layout_constraintTop_toTopOf="@+id/et_title" />
 
         <TextView
-            style="@style/EditorCategory"
-            android:text="@string/editor_category_quantity"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_decrease"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_decrease" />
-
-        <TextView
             android:id="@+id/tv_supplier"
             style="@style/EditorCategory"
             android:text="@string/editor_category_supplier"
@@ -79,7 +72,6 @@
             android:id="@+id/btn_decrease"
             style="@style/EditorQuantityButton"
             android:text="@string/btn_decrease_text"
-            app:layout_constraintEnd_toStartOf="@+id/tv_edit_quantity"
             app:layout_constraintStart_toStartOf="@+id/et_price"
             app:layout_constraintTop_toBottomOf="@+id/et_price" />
 
@@ -88,20 +80,19 @@
             style="@style/EditorQuantityButton"
             android:text="@string/btn_increase_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_edit_quantity"
             app:layout_constraintTop_toBottomOf="@+id/et_price" />
 
-        <TextView
-            android:id="@+id/tv_edit_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero"
+        <EditText
+            android:id="@+id/et_edit_quantity"
+            style="@style/EditorEditText"
+            android:layout_marginEnd="@dimen/marginMedium"
+            android:layout_marginStart="@dimen/marginMedium"
+            android:hint="@string/et_quantity_hint"
+            android:inputType="number"
             android:textAlignment="center"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="@+id/btn_decrease"
-            app:layout_constraintEnd_toEndOf="@+id/et_price"
-            app:layout_constraintStart_toStartOf="@+id/et_price"
+            app:layout_constraintEnd_toStartOf="@+id/btn_increase"
+            app:layout_constraintStart_toEndOf="@id/btn_decrease"
             app:layout_constraintTop_toTopOf="@+id/btn_decrease" />
 
         <EditText

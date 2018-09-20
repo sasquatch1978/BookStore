@@ -50,20 +50,22 @@ public class BookCursorAdapter extends CursorAdapter {
      * This method binds the book data (in the current row pointed to by cursor) to the given
      * list item layout.
      *
-     * @param view    Existing view, returned earlier by newView() method
-     * @param context app context
-     * @param cursor  The cursor from which to get the data. The cursor is already moved to the
-     *                correct row.
+     * @param convertView Existing view, returned earlier by newView() method
+     * @param context     app context
+     * @param cursor      The cursor from which to get the data. The cursor is already moved to
+     *                    the correct row.
      */
     @Override
-    public void bindView(View view, final Context context, final Cursor cursor) {
-        // Identify the views.
-        TextView tvTitle = view.findViewById(R.id.tv_title);
-        TextView tvAuthor = view.findViewById(R.id.tv_author);
-        TextView tvPrice = view.findViewById(R.id.tv_price);
-        TextView tvQuantity = view.findViewById(R.id.tv_quantity);
-        TextView tvQuantityHint = view.findViewById(R.id.tv_quantity_hint);
-        Button btnSale = view.findViewById(R.id.btn_sale);
+    public void bindView(View convertView, final Context context, final Cursor cursor) {
+        // Identify the views and populate the ViewHolder.
+        ViewHolder holder = new ViewHolder();
+        holder.tvTitle = convertView.findViewById(R.id.tv_title);
+        holder.tvAuthor = convertView.findViewById(R.id.tv_author);
+        holder.tvPrice = convertView.findViewById(R.id.tv_price);
+        holder.tvQuantity = convertView.findViewById(R.id.tv_quantity);
+        holder.tvQuantityHint = convertView.findViewById(R.id.tv_quantity_hint);
+        holder.btnSale = convertView.findViewById(R.id.btn_sale);
+        convertView.setTag(holder);
 
         // Find the columns of book attributes that are needed to populate the list.
         int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
@@ -81,39 +83,43 @@ public class BookCursorAdapter extends CursorAdapter {
 
         // Set the the attributes for the current book on the TextViews.
         // Display the book title.
-        tvTitle.setText(productName);
+        holder.tvTitle.setText(productName);
 
         // Display the author.
-        tvAuthor.setText(author);
+        holder.tvAuthor.setText(author);
 
         // Display the formatted the price corresponding to the user's locale.
-        tvPrice.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(price)));
+        holder.tvPrice.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(price)));
 
         // Display "In stock" or "Out of stock" for the quantity hint.
         if (quantity.equals(context.getString(R.string.zero))) {
             // Make the text bold in the quantity hint TextView if the quantity is zero.
-            tvQuantityHint.setTypeface(Typeface.create(tvQuantityHint.getTypeface(), Typeface.BOLD));
+            holder.tvQuantityHint.setTypeface(Typeface.create(holder.tvQuantityHint
+                    .getTypeface(), Typeface.BOLD));
 
             // Change the text color in the quantity hint TextView if the quantity is zero.
-            tvQuantityHint.setTextColor(context.getResources().getColor(R.color.colorTextAttention));
+            holder.tvQuantityHint.setTextColor(context.getResources()
+                    .getColor(R.color.colorTextAttention));
 
             // Set the quantity hint TextView text to "Out of stock:", if the quantity is zero.
-            tvQuantityHint.setText(R.string.out_of_stock);
+            holder.tvQuantityHint.setText(R.string.out_of_stock);
         } else {
             // Make sure the quantity hint TextView reverts to it's normal state,
             // if the quantity was previously zero.
-            tvQuantityHint.setTypeface(Typeface.create(tvQuantityHint.getTypeface(), Typeface.NORMAL));
-            tvQuantityHint.setTextColor(context.getResources().getColor(R.color.colorTextLight));
+            holder.tvQuantityHint.setTypeface(Typeface.create(holder.tvQuantityHint
+                    .getTypeface(), Typeface.NORMAL));
+            holder.tvQuantityHint.setTextColor(context.getResources()
+                    .getColor(R.color.colorTextLight));
 
             // Set the quantity hint TextView text to "In stock:", if the quantity is more than zero.
-            tvQuantityHint.setText(R.string.in_stock);
+            holder.tvQuantityHint.setText(R.string.in_stock);
         }
 
         // Display the quantity.
-        tvQuantity.setText(quantity);
+        holder.tvQuantity.setText(quantity);
 
         // Set a listener for the Sale Button.
-        btnSale.setOnClickListener(new View.OnClickListener() {
+        holder.btnSale.setOnClickListener(new View.OnClickListener() {
 
             // Value for the quantity to be updated.
             int bookQuantity = cursor.getInt(quantityColumnIndex);
@@ -161,5 +167,15 @@ public class BookCursorAdapter extends CursorAdapter {
                 }
             }
         });
+    }
+
+    // Class to hold the views.
+    static class ViewHolder {
+        TextView tvTitle;
+        TextView tvAuthor;
+        TextView tvPrice;
+        TextView tvQuantity;
+        TextView tvQuantityHint;
+        Button btnSale;
     }
 }

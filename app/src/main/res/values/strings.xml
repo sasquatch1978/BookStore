@@ -129,9 +129,6 @@
     <!-- Label for the book attributes in the editor [CHAR LIMIT=30] -->
     <string name="editor_category_book">Book</string>
 
-    <!-- Label for the quantity in the editor [CHAR LIMIT=30] -->
-    <string name="editor_category_quantity">Quantity</string>
-
     <!-- Label for the supplier attributes in the editor [CHAR LIMIT=30] -->
     <string name="editor_category_supplier">Supplier</string>
 
@@ -143,6 +140,9 @@
 
     <!-- EditText hint for the price field in the editor [CHAR LIMIT=30] -->
     <string name="et_price_hint">Price</string>
+
+    <!-- EditText hint for the quantity field in the editor [CHAR LIMIT=30] -->
+    <string name="et_quantity_hint">Quantity</string>
 
     <!-- EditText hint for the supplier field in the editor [CHAR LIMIT=30] -->
     <string name="et_supplier_hint">Supplier</string>
